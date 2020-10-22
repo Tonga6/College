@@ -72,6 +72,7 @@ HINT: Don't worry about code efficiency
        Seriously, don't!
 
 -}
+
 elem :: Eq a => a -> [a] -> Bool
 elem x y:ys    |      x == y       =      x:y:ys        --if x == y append x to list
 
