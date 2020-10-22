@@ -1,5 +1,6 @@
 module Ex01 where
 import Data.Char (toUpper)
+import Data.List
 
 name, idno, username :: String
 name      =  "Oisin, Tong"  -- replace with your name
@@ -73,23 +74,8 @@ HINT: Don't worry about code efficiency
 
 -}
 
-elem :: Eq a => a -> [a] -> Bool
-elem x y:ys    |      x == y       =      x:y:ys        --if x == y append x to list
-
-concurrentEquals:: a -> [a] -> Int
-concurrentEquals x y:ys     |      x == y        =      1 + concurrentEquals y ys
-
-splitAt :: Int -> [a] -> ([a], [a])
 
 runs :: Eq a => [a] -> [[a]]
-i = 0
-ans = []
-runs [] = ans        --[] input if recursion complete
-runs (x:xs)   |      elem x xs     =  splitAt ((concurrentEquals x xs) x:xs)   
-              |      otherwise     = runs (xs) 
 
-{-
-Use commonLen to append a list of size x mapped with relavent value into output list.
-Cut x from list xs afte r iterating through.
-reverse list once finished
--}
+runs xs = group xs
+

@@ -16,11 +16,11 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "C:\\Users\\Oisin Tong\\Desktop\\College\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\bin"
-libdir     = "C:\\Users\\Oisin Tong\\Desktop\\College\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\lib\\x86_64-windows-ghc-7.10.3\\ex01-0.1.0.0-DAmIZvqlGfO1en5WWmRvQz"
-datadir    = "C:\\Users\\Oisin Tong\\Desktop\\College\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\share\\x86_64-windows-ghc-7.10.3\\ex01-0.1.0.0"
-libexecdir = "C:\\Users\\Oisin Tong\\Desktop\\College\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\libexec"
-sysconfdir = "C:\\Users\\Oisin Tong\\Desktop\\College\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\etc"
+bindir     = "C:\\Users\\Oisin Tong\\OneDrive - TCDUD.onmicrosoft.com\\College-DESKTOP-9RSA1TO\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\bin"
+libdir     = "C:\\Users\\Oisin Tong\\OneDrive - TCDUD.onmicrosoft.com\\College-DESKTOP-9RSA1TO\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\lib\\x86_64-windows-ghc-7.10.3\\ex01-0.1.0.0-DAmIZvqlGfO1en5WWmRvQz"
+datadir    = "C:\\Users\\Oisin Tong\\OneDrive - TCDUD.onmicrosoft.com\\College-DESKTOP-9RSA1TO\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\share\\x86_64-windows-ghc-7.10.3\\ex01-0.1.0.0"
+libexecdir = "C:\\Users\\Oisin Tong\\OneDrive - TCDUD.onmicrosoft.com\\College-DESKTOP-9RSA1TO\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\libexec"
+sysconfdir = "C:\\Users\\Oisin Tong\\OneDrive - TCDUD.onmicrosoft.com\\College-DESKTOP-9RSA1TO\\3rd Year\\Functional Programming\\Ex01\\Exercise01\\.stack-work\\install\\25e39688\\etc"
 
 getBinDir, getLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "ex01_bindir") (\_ -> return bindir)
