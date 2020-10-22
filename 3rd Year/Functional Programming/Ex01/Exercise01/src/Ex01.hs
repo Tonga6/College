@@ -2,9 +2,9 @@ module Ex01 where
 import Data.Char (toUpper)
 
 name, idno, username :: String
-name      =  "Myself, Me"  -- replace with your name
-idno      =  "01234567"    -- replace with your student id
-username  =  "memyselfi"   -- replace with your TCD username
+name      =  "Oisin, Tong"  -- replace with your name
+idno      =  "18323736"    -- replace with your student id
+username  =  "tongo"   -- replace with your TCD username
 
 
 declaration -- do not modify this
@@ -26,7 +26,8 @@ It is imported should you want to use it.
 
 -}
 raise :: String -> String
-raise str = undefined
+raise [] = []
+raise (x:xs) = toUpper x : (raise xs)
 
 {- Part 2
 
@@ -35,7 +36,9 @@ Hint: the test will answer your Qs
 
 -}
 nth :: Int -> [a] -> a
-nth i xs = undefined
+nth i (x:xs)  |      i > 1         =      nth (i-1) xs         --if i > 1, recursive call nth
+              |      i == 1        =      x    
+              |      otherwise     =      x     
 
 
 {- Part 3
@@ -44,12 +47,17 @@ Write a function `commonLen` that compares two sequences
 and reports the length of the prefix they have in common.
 
 -}
+
+
 commonLen :: Eq a => [a] -> [a] -> Int
-commonLen xs ys = undefined
+commonLen _ [] = 0
+commonLen [] _ = 0
+commonLen (x:xs) (y:ys)     |      x == y        =      1 + commonLen (xs) (ys)         
+                            |      otherwise     =      0
 
 {- Part 4
 
-(TRICKY!) (VERY!)
+
 
 Write a function `runs` that converts a list of things
 into a list of sublists, each containing elements of the same value,
@@ -64,5 +72,23 @@ HINT: Don't worry about code efficiency
        Seriously, don't!
 
 -}
+elem :: Eq a => a -> [a] -> Bool
+elem x y:ys    |      x == y       =      x:y:ys        --if x == y append x to list
+
+concurrentEquals:: a -> [a] -> Int
+concurrentEquals x y:ys     |      x == y        =      1 + concurrentEquals y ys
+
+splitAt :: Int -> [a] -> ([a], [a])
+
 runs :: Eq a => [a] -> [[a]]
-runs xs = undefined
+i = 0
+ans = []
+runs [] = ans        --[] input if recursion complete
+runs (x:xs)   |      elem x xs     =  splitAt ((concurrentEquals x xs) x:xs)   
+              |      otherwise     = runs (xs) 
+
+{-
+Use commonLen to append a list of size x mapped with relavent value into output list.
+Cut x from list xs afte r iterating through.
+reverse list once finished
+-}
