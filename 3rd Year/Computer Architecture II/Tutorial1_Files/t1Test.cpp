@@ -5,6 +5,7 @@
 #include "stdafx.h"         // pre-compiled headers
 #include <iostream>         // std::cout
 #include "fib32.h"          // header file for fib32.asm
+#include "fib32.asm"          // header file for fib32.asm
 
 //
 // fib: C++
