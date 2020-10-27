@@ -78,12 +78,10 @@ public class LCA
   
         if (root.data == n) { 
             return true; 
-        } 
-  
+        }   
         if (root.left != null && findPath(root.left, n, path)) { 
             return true; 
-        } 
-  
+        }   
         if (root.right != null && findPath(root.right, n, path)) { 
             return true; 
         } 
