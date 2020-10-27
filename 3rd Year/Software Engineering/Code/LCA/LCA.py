@@ -1,50 +1,30 @@
-class TreeNode:
-   def __init__(self, data, left = None, right = None):
-      self.data = data
-      self.left = left
-      self.right = right
+class Node:
 
-def insert(temp,data):
-   que = []
-   que.append(temp)
-   while (len(que)):
-      temp = que[0]
-      que.pop(0)
-      if (not temp.left):
-         if data is not None:
-            temp.left = TreeNode(data)
-         else:
-            temp.left = TreeNode(0)
-         break
-      else:
-         que.append(temp.left)
-         if (not temp.right):
-            if data is not None:
-               temp.right = TreeNode(data)
-            else:
-               temp.right = TreeNode(0)
-            break
-         else:
-            que.append(temp.right)
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
 
-def make_tree(elements):
-   Tree = TreeNode(elements[0])
-   for element in elements[1:]:
-      insert(Tree, element)
-   return Tree
+def findLCA(root, n1, n2):
 
-   
-class Solution(object):
-   def LCA(self, root, p, q):
-      if not root:
-         return None
-      if root.data == p or root.data ==q:
-         return root
-      left = self.LCA(root.left, p, q)
-      right = self.LCA(root.right, p, q)
-      if right and left:
-         return root
-      return right or left
-ob1 = Solution()
-tree = make_tree([3,5,1,6,2,0,8,None,None,7,4])
-print(ob1.LCA(tree, 5, 1).data)
+    if root is None:
+        return None
+
+    if root.key == n1 or root.key == n2:
+        return root
+
+    left_lca = findLCA(root.left, n1, n2)
+    right_lca = findLCA(root.right, n1, n2)
+
+    if left_lca and right_lca:
+        return root
+
+    return left_lca if left_lca is not None else right_lca
+
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.left = Node(6)
+root.right.right = Node(7)

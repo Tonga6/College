@@ -1,25 +1,32 @@
-# Import the code to be tested
-from LCA import LCA
+import unittest
+import LCA
 
-# Import the test framework (this is a hypothetical module)
-import test_framework
+class TestLCA(unittest.TestCase):
 
-# This is a generalized example, not specific to a test framework
-class LCATests(test_framework.TestBaseClass):
-    def test_validator_valid_string(LCA):
-        # The exact assertion call depends on the framework as well
-        assert(validate_account_number_format("3"), true)
+    def test_node4_5(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 4, 5).key, 2)
 
-    # ...
+    def test_node6_2(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 6, 2).key, 1)
 
-    def test_validator_blank_string():
-        # The exact assertion call depends on the framework as well
-        assert(validate_account_number_format(""), false)
+    def test_node_none(self):
+        self.assertEqual(LCA.findLCA(None, 4, 5), None)
 
-    # ...
+    def test_node1_5(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 1, 5).key, 1)
 
-    def test_validator_sql_injection():
-        # The exact assertion call depends on the framework as well
-        assert(validate_account_number_format("drop database master"), false)
+    def test_node_same(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 1, 1).key, 1)
 
-    # ... tests for all other cases
+    def test_node2_3(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 2, 3).key, 1)
+
+    def test_node6_7(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 6, 7).key, 3)
+
+    def test_node_fake(self):
+        self.assertEqual(LCA.findLCA(LCA.root, 8, 8), None)
+
+
+if __name__ == '__main__':
+    unittest.main()
