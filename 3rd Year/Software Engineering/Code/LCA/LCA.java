@@ -24,12 +24,38 @@ public class LCA
     public static void main(String[] args) 
     { 
         LCA graph = new LCA();
-        for(int i = 0;i < 10; i++){ //create graph with 10 nodes
+        for(int i = 0;i < 16; i++){ //create graph with 6 nodes
           graph.nodes.add(i,new Node(i+1));
-          //System.out.println(graph.nodes.get(i).data); 
+           
         }
-        
-        
+        graph.nodes.get(0).children.add(0,graph.nodes.get(1));
+        graph.nodes.get(0).children.add(1,graph.nodes.get(2));
+        graph.nodes.get(0).children.add(2,graph.nodes.get(4));
+        graph.nodes.get(0).children.add(3,graph.nodes.get(5));
+
+        graph.nodes.get(1).parents.add(0,graph.nodes.get(0));
+        graph.nodes.get(1).children.add(0,graph.nodes.get(3));
+        graph.nodes.get(1).children.add(1,graph.nodes.get(6));
+
+        graph.nodes.get(2).parents.add(0,graph.nodes.get(0));
+        graph.nodes.get(2).children.add(0,graph.nodes.get(3));
+
+        graph.nodes.get(3).parents.add(0,graph.nodes.get(1));
+        graph.nodes.get(3).parents.add(1,graph.nodes.get(2));
+        graph.nodes.get(3).parents.add(2,graph.nodes.get(4));
+        graph.nodes.get(3).children.add(0,graph.nodes.get(6));
+
+        graph.nodes.get(4).parents.add(0,graph.nodes.get(0));
+        graph.nodes.get(4).children.add(0,graph.nodes.get(4));
+        graph.nodes.get(4).children.add(1,graph.nodes.get(6));
+
+        graph.nodes.get(5).parents.add(0,graph.nodes.get(0));
+
+        graph.nodes.get(6).parents.add(0,graph.nodes.get(1));
+        graph.nodes.get(6).parents.add(1,graph.nodes.get(3));
+        graph.nodes.get(6).parents.add(2,graph.nodes.get(4));
+
+        //System.out.println(graph.nodes.get(0).children.get(1).data);
         
         // tree.root = new Node(1); 
         // tree.root.left = new Node(2); 
