@@ -2,14 +2,16 @@
 
 // Finds for Lowest Common Ancestor in a Binary Tree 
 // A O(n) solution to find LCA of two given values n1 and n2 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List; 
   
 // A Binary Tree node 
 class Node { 
     int data; 
     ArrayList<Node> children = new ArrayList<Node>();
-    ArrayList<Node> parents = new ArrayList<Node>();  
+    ArrayList<Node> parents = new ArrayList<Node>(); 
+     
   
     Node(int value) { 
         data = value; 
@@ -54,19 +56,40 @@ public class LCA
         graph.nodes.get(6).parents.add(0,graph.nodes.get(1));
         graph.nodes.get(6).parents.add(1,graph.nodes.get(3));
         graph.nodes.get(6).parents.add(2,graph.nodes.get(4));
-
-        //System.out.println(graph.nodes.get(0).children.get(1).data);
-        
-        // tree.root = new Node(1); 
-        // tree.root.left = new Node(2); 
-        // tree.root.right = new Node(3); 
-        // tree.root.left.left = new Node(4); 
-        // tree.root.left.right = new Node(5); 
-        // tree.root.right.left = new Node(6); 
-        // tree.root.right.right = new Node(7); 
+    
+        ArrayList<ArrayList<Node>> allParents = new ArrayList<ArrayList<Node>>();
+        getAllParents(allParents, graph.nodes.get(6), 0);
    
     }  
   
+    static void getAllParents (ArrayList<ArrayList<Node>> allParents, Node node, int depth){
+        if (!node.parents.isEmpty()){
+            
+            if (allParents.get(depth).isEmpty()) {  //if != null, there is existing array to modify, not overwrite
+                if (allParents.size() < depth){     //if size < depth, following entry is the initialisation of index depth
+        //             allParents.add(node.parents);                     
+                }  
+        //         else {
+        //             allParents.get(depth).addAll(node.parents);  //add parents to existing array of parents at this depth
+        //         }  
+        //     }
+        //     else             
+        //          allParents.add(depth, node.parents);
+         }
+        // else
+        //     allParents.add(null);    // no parents to add
+    
+        // Iterator<Node> it = node.parents.iterator(); 
+        // for (int i = 0; it.hasNext(); i++){
+        //     getAllParents(allParents, node.parents.get(i), depth+1);
+        // }    
+        return;
+    }
+    
+
+
+
+
     // // Finds the path from root node to given root of the tree. 
     // int findLCA(int n1, int n2) { 
     //     pathA.clear(); 
