@@ -26,7 +26,7 @@ public class LCA
     public static void main(String[] args) 
     { 
         LCA graph = new LCA();
-        for(int i = 0;i < 16; i++){ //create graph with 6 nodes
+        for(int i = 0;i < 7; i++){ //create graph with 6 nodes
           graph.nodes.add(i,new Node(i+1));
            
         }
@@ -58,32 +58,34 @@ public class LCA
         graph.nodes.get(6).parents.add(2,graph.nodes.get(4));
     
         ArrayList<ArrayList<Node>> allParents = new ArrayList<ArrayList<Node>>();
-        getAllParents(allParents, graph.nodes.get(6), 0);
-   
+        getAllParentsA(graph, allParents, graph.nodes.get(6), 0);
+        getAllParentsB(graph, allParents, graph.nodes.get(6), 0);
+        System.out.println("End");
     }  
   
-    static void getAllParents (ArrayList<ArrayList<Node>> allParents, Node node, int depth){
-        if (!node.parents.isEmpty()){
-            
-            if (allParents.get(depth).isEmpty()) {  //if != null, there is existing array to modify, not overwrite
-                if (allParents.size() < depth){     //if size < depth, following entry is the initialisation of index depth
-        //             allParents.add(node.parents);                     
-                }  
-        //         else {
-        //             allParents.get(depth).addAll(node.parents);  //add parents to existing array of parents at this depth
-        //         }  
-        //     }
-        //     else             
-        //          allParents.add(depth, node.parents);
+    static void getAllParents (LCA graph, ArrayList<ArrayList<Node>> allParents, Node node, int depth){
+         
+        if (!node.parents.isEmpty()){                                                
+                    
+            if (allParents.size() <= depth){    //if size <= depth, following entry is the fist entry at index depth  
+                //allParents.add(node.parents);     .add puts a pointer to the array, so editing allParents[i] also affects the first node added
+                allParents.add((ArrayList<Node>)node.parents.clone());
+            }    
+            else{
+                if (allParents.get(depth) != null)  //if != null can use .addAll
+                    allParents.get(depth).addAll(node.parents); //Add parents to existing array of parents at this depth 
+
+                else    
+                    allParents.add(depth, node.parents);    //else use add(ind,elem) 
+            }
+        }
+        else
+            allParents.add(null);    // no parents to add
+
+        for (int i = 0; i < node.parents.size(); i++){
+             getAllParents(graph, allParents, node.parents.get(i), depth+1);
          }
-        // else
-        //     allParents.add(null);    // no parents to add
-    
-        // Iterator<Node> it = node.parents.iterator(); 
-        // for (int i = 0; it.hasNext(); i++){
-        //     getAllParents(allParents, node.parents.get(i), depth+1);
-        // }    
-        return;
+        System.out.println("Leave");
     }
     
 
