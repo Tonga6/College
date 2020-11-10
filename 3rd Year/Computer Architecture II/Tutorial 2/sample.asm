@@ -37,20 +37,20 @@ fibX64:
 
 fib_rec:
 ;; Recursive call fibX64 function
-		sub rsp, 40				;; allocate shadow space
+		sub rsp, 32				;; allocate shadow space
 		sub rcx, 1				;; 1st arg: fin-1
-		mov [rsp+24], rcx		;; preserve fin-1
+		mov [rsp+16], rcx		;; preserve fin-1
 
 		call fibX64				;; call the function
 
-		mov [rsp+32], rax		;; preserve fibX64(fin-1) in shadow space for fibX64(fin-1) + fibX64(fin-2)#
-		mov rcx, [rsp+24]		;; restore fin-1
+		mov [rsp+24], rax		;; preserve fibX64(fin-1) in shadow space for fibX64(fin-1) + fibX64(fin-2)#
+		mov rcx, [rsp+16]		;; restore fin-1
 		sub rcx, 1				;;1st arg: fin-2
 		call fibX64
 
 
-		add rax, [rsp+32]		;; rax = fibX64(fin-1) + fibX64(fin-2)
-		add rsp, 40
+		add rax, [rsp+24]		;; rax = fibX64(fin-1) + fibX64(fin-2)
+		add rsp, 32
 		ret
 fib_0:
 		mov rax, rcx			;;return fin
@@ -98,6 +98,52 @@ use_scanf:
 			add rsp, 112				;;deallocate shadow spaces
 			
 			ret
+
+
+
+public max
+
+max:		
+
+			mov rax, rcx			;;v = a
+			cmp rdx, rcx
+			jl c_check
+
+			mov rax, rdx			;; b>v, so v = b
+
+c_check:	cmp r8, rax
+			jl max_end
+
+			mov rax, r8				;; c>v, so v = c
+
+max_end:	ret
+
+
+public max5
+
+max5:
+
+			;call max (inp_int,i,j)
+			;call max (rax, k,l)
+			mov r12, rcx
+			mov r13, rdx
+			mov r14, r8
+			mov r15, r9
+
+			mov r8, rdx				;;3rd arg
+			mov rdx, rcx			;;2nd arg
+			mov rcx, [inp_int]		;;1st arg
+			sub rsp, 32				;;allocate shadow space
+			call max
+
+			mov rcx, rax			;;1st arg
+			mov rdx, r14			;;2nd arg
+			mov r8, r15				;;3rd arg
+			call max
+
+			add rsp, 32
+			ret
+
 
 
 ;; address of the array: RDX

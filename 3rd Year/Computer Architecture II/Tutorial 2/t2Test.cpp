@@ -65,17 +65,17 @@ int main()
 
 	std::cout << "\n\n";
 
-	//// max5
-	//std::cout << "Global variable (inp_int): " << inp_int << "\n";
-	//check("max5(1, 2, 3, 4)", max5(1, 2, 3, 4), std::max(std::max(std::max(std::max(inp_int, (long long)1), (long long)2), (long long)3), (long long)4));
-	//check("max5(3, 1, 2, 5)", max5(3, 1, 2, 5), std::max(std::max(std::max(std::max(inp_int, (long long)3), (long long)1), (long long)2), (long long)5));
-	//check("max5(2, 3, 1, -5)", max5(2, 3, 1, -5), std::max(std::max(std::max(std::max(inp_int, (long long)2), (long long)3), (long long)1), (long long)-5));
-	//check("max5(-1, -2, -3, -4)", max5(-1, -2, -3, -4), std::max(std::max(std::max(std::max(inp_int, (long long)-1), (long long)-2), (long long)-3), (long long)-4));
-	//check("max5(-3, -1, -2, 0)", max5(-3, -1, -2, 0), std::max(std::max(std::max(std::max(inp_int, (long long)-3), (long long)-1), (long long)-2), (long long)0));
-	//check("max5(-2, -3, -1, 3)", max5(-2, -3, -1, 3), std::max(std::max(std::max(std::max(inp_int, (long long)-2), (long long)-3), (long long)-1), (long long)3));
-	//check("max5(-1, 2, 3, 4)", max5(-1, 2, 3, 4), std::max(std::max(std::max(std::max(inp_int, (long long)-1), (long long)2), (long long)3), (long long)4));
-	//check("max5(3, -1, 2, 6)", max5(3, -1, 2, 6), std::max(std::max(std::max(std::max(inp_int, (long long)3), (long long)-1), (long long)2), (long long)6));
-	//check("max5(2, 3, -1, -5)", max5(2, 3, -1, -5), std::max(std::max(std::max(std::max(inp_int, (long long)2), (long long)3), (long long)-1), (long long)-5));
+	// max5
+	std::cout << "Global variable (inp_int): " << inp_int << "\n";
+	check("max5(1, 2, 3, 4)", max5(1, 2, 3, 4), std::max(std::max(std::max(std::max(inp_int, (long long)1), (long long)2), (long long)3), (long long)4));
+	check("max5(3, 1, 2, 5)", max5(3, 1, 2, 5), std::max(std::max(std::max(std::max(inp_int, (long long)3), (long long)1), (long long)2), (long long)5));
+	check("max5(2, 3, 1, -5)", max5(2, 3, 1, -5), std::max(std::max(std::max(std::max(inp_int, (long long)2), (long long)3), (long long)1), (long long)-5));
+	check("max5(-1, -2, -3, -4)", max5(-1, -2, -3, -4), std::max(std::max(std::max(std::max(inp_int, (long long)-1), (long long)-2), (long long)-3), (long long)-4));
+	check("max5(-3, -1, -2, 0)", max5(-3, -1, -2, 0), std::max(std::max(std::max(std::max(inp_int, (long long)-3), (long long)-1), (long long)-2), (long long)0));
+	check("max5(-2, -3, -1, 3)", max5(-2, -3, -1, 3), std::max(std::max(std::max(std::max(inp_int, (long long)-2), (long long)-3), (long long)-1), (long long)3));
+	check("max5(-1, 2, 3, 4)", max5(-1, 2, 3, 4), std::max(std::max(std::max(std::max(inp_int, (long long)-1), (long long)2), (long long)3), (long long)4));
+	check("max5(3, -1, 2, 6)", max5(3, -1, 2, 6), std::max(std::max(std::max(std::max(inp_int, (long long)3), (long long)-1), (long long)2), (long long)6));
+	check("max5(2, 3, -1, -5)", max5(2, 3, -1, -5), std::max(std::max(std::max(std::max(inp_int, (long long)2), (long long)3), (long long)-1), (long long)-5));
 
 	std::cout << "\n";
 	// Sum of array through assembly
