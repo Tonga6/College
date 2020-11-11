@@ -57,9 +57,12 @@ public class LCA
         graph.nodes.get(6).parents.add(1,graph.nodes.get(3));
         graph.nodes.get(6).parents.add(2,graph.nodes.get(4));
     
-        ArrayList<ArrayList<Node>> allParents = new ArrayList<ArrayList<Node>>();
-        getAllParentsA(graph, allParents, graph.nodes.get(6), 0);
-        getAllParentsB(graph, allParents, graph.nodes.get(6), 0);
+        ArrayList<ArrayList<Node>> allParentsA = new ArrayList<ArrayList<Node>>();
+        ArrayList<ArrayList<Node>> allParentsB = new ArrayList<ArrayList<Node>>();
+        getAllParents(graph, allParentsA, graph.nodes.get(6), 0);
+        getAllParents(graph, allParentsB, graph.nodes.get(3), 0);
+        ArrayList<ArrayList<Node>> arrLCA = new ArrayList<ArrayList<Node>>();
+        getLCA(arrLCA, allParentsA, allParentsB);
         System.out.println("End");
     }  
   
@@ -77,18 +80,30 @@ public class LCA
 
                 else    
                     allParents.add(depth, node.parents);    //else use add(ind,elem) 
-            }
+                }
         }
-        else
+        else if (allParents.size() < depth)
             allParents.add(null);    // no parents to add
 
         for (int i = 0; i < node.parents.size(); i++){
              getAllParents(graph, allParents, node.parents.get(i), depth+1);
          }
-        System.out.println("Leave");
     }
     
+    static void getLCA (ArrayList<ArrayList<Node>> arrayLCA, ArrayList<ArrayList<Node>> allParentsA, ArrayList<ArrayList<Node>> allParentsB){
 
+        int minLCADepth = -1;
+        for(int i =0; (minLCADepth == -1 || i < minLCADepth) && allParentsA.size() > i;i++ ){
+            for (int j =0; (minLCADepth == -1 || j < minLCADepth) && allParentsB.size() > j;j++){
+                allParentsA.get(i).retainAll(allParentsB.get(j));
+                if (!allParentsA.get(i).isEmpty()/* && Math.max(i,j) maxLCADepth */)
+                    arrayLCA.add(0,allParentsA.get(i));
+                    minLCADepth = Math.max(i,j);    //new min LCA to beat or join
+            }
+            
+        }
+         
+    }
 
 
 
