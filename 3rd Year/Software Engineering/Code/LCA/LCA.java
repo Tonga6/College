@@ -1,96 +1,55 @@
-//Test lines added for git testing
-
-// Finds for Lowest Common Ancestor in a Binary Tree 
-// A O(n) solution to find LCA of two given values n1 and n2 
-import java.util.ArrayList; 
-import java.util.List; 
+import java.util.ArrayList;
   
-// A Binary Tree node 
+// A DAG node
 class Node { 
     int data; 
-    Node left, right; 
+    ArrayList<Node> children = new ArrayList<Node>();
+    ArrayList<Node> parents = new ArrayList<Node>(); 
+     
   
     Node(int value) { 
         data = value; 
-        left = right = null; 
+         
     } 
 } 
   
 public class LCA  
 {   
-    Node root; 
-    private List<Integer> pathA = new ArrayList<>(); 
-    private List<Integer> pathB = new ArrayList<>(); 
-    
-    public static void main(String[] args) 
-    { 
-        LCA tree = new LCA();
+    ArrayList<Node> nodes = new ArrayList<Node>(); 
+  
+    static void getAllParents (LCA graph, ArrayList<ArrayList<Node>> allParents, Node node, int depth){
+         
+        if (!node.parents.isEmpty()){                                                
+                    
+            if (allParents.size() <= depth){    //if size <= depth, following entry is the fist entry at index depth  
+                allParents.add((ArrayList<Node>)node.parents.clone());
+            }    
+            else{
+                if (allParents.get(depth) != null)  //if != null can use .addAll
+                    allParents.get(depth).addAll(node.parents); //Add parents to existing array of parents at this depth 
 
-        tree.root = new Node(1); 
-        tree.root.left = new Node(2); 
-        tree.root.right = new Node(3); 
-        tree.root.left.left = new Node(4); 
-        tree.root.left.right = new Node(5); 
-        tree.root.right.left = new Node(6); 
-        tree.root.right.right = new Node(7); 
-  
-        System.out.println("LCA of node (4, 5) should be: " + tree.findLCA(4,5)); 
-        System.out.println("LCA of node (4, 6) should be: " + tree.findLCA(4,6)); 
-        System.out.println("LCA of node (3, 4) should be: " + tree.findLCA(3,4)); 
-        System.out.println("LCA of node (2, 4) should be: " + tree.findLCA(2,4));
-        System.out.println("LCA of node (0, 7) should be: " + tree.findLCA(0,7)); 
-        //      
-    }  
-  
-    // Finds the path from root node to given root of the tree. 
-    int findLCA(int n1, int n2) { 
-        pathA.clear(); 
-        pathB.clear(); 
-        return findLCAInternal(root, n1, n2); 
-    } 
-  
-    private int findLCAInternal(Node root, int n1, int n2) { 
-  
-        if (!findPath(root, n1, pathA) || !findPath(root, n2, pathB)) { 
-            System.out.println((pathA.size() > 0) ? "n1 is present" : "n1 is missing"); 
-            System.out.println((pathB.size() > 0) ? "n2 is present" : "n2 is missing"); 
-            return -1; 
-        } 
-  
-        int i; 
-        for (i = 0; i < pathA.size() && i < pathB.size(); i++) { 
-            if (!pathA.get(i).equals(pathB.get(i))) 
-                break; 
-        }   
-        return pathA.get(i-1); 
-    } 
-      
-    // Finds the path from root node to given root of the tree, Stores the 
-    // path in a vector path[], returns true if path exists otherwise false 
-    private boolean findPath(Node root, int n, List<Integer> path) 
-    { 
-        // base case 
-        if (root == null) { 
-            return false; 
-        } 
-          
-        // Store this node . The node will be removed if 
-        // not in path from root to n. 
-        path.add(root.data); 
-  
-        if (root.data == n) { 
-            return true; 
-        }   
-        if (root.left != null && findPath(root.left, n, path)) { 
-            return true; 
-        }   
-        if (root.right != null && findPath(root.right, n, path)) { 
-            return true; 
-        } 
-  
-        // If not present in subtree rooted with root, remove root from 
-        // path[] and return false 
-        path.remove(path.size()-1);   
-        return false; 
-    }     
+                else    
+                    allParents.add(depth, node.parents);    //else use add(ind,elem) 
+                }
+        }
+        else if (allParents.size() < depth)
+            allParents.add(null);    // no parents to add
+
+        for (int i = 0; i < node.parents.size(); i++){
+             getAllParents(graph, allParents, node.parents.get(i), depth+1);
+         }
+    }
+    
+    static void getLCA (ArrayList<ArrayList<Node>> arrayLCA, ArrayList<ArrayList<Node>> allParentsA, ArrayList<ArrayList<Node>> allParentsB){
+
+        int minLCADepth = -1;
+        for(int i =0; (minLCADepth == -1 || i < minLCADepth) && allParentsA.size() > i;i++ ){
+            for (int j =0; (minLCADepth == -1 || j < minLCADepth) && allParentsB.size() > j;j++){
+                allParentsA.get(i).retainAll(allParentsB.get(j));
+                if (!allParentsA.get(i).isEmpty()/* && Math.max(i,j) maxLCADepth */)
+                    arrayLCA.add(0,allParentsA.get(i));
+                    minLCADepth = Math.max(i,j);    //new min LCA to beat or join
+            }            
+        }         
+    }
 } 
