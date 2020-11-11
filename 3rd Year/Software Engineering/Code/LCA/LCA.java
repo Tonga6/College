@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List; 
   
 // A DAG node
 class Node { 
@@ -18,56 +16,12 @@ class Node {
 public class LCA  
 {   
     ArrayList<Node> nodes = new ArrayList<Node>(); 
-//    
-//     public static void main(String[] args) 
-//     { 
-//    	 LCA graph = new LCA();
-//         for(int i = 0;i < 7; i++){ //create graph with 6 nodes
-//           graph.nodes.add(i,new Node(i+1));
-//            
-//         }
-//         graph.nodes.get(0).children.add(0,graph.nodes.get(1));
-//         graph.nodes.get(0).children.add(1,graph.nodes.get(2));
-//         graph.nodes.get(0).children.add(2,graph.nodes.get(4));
-//         graph.nodes.get(0).children.add(3,graph.nodes.get(5));
-//
-//         graph.nodes.get(1).parents.add(0,graph.nodes.get(0));
-//         graph.nodes.get(1).children.add(0,graph.nodes.get(3));
-//         graph.nodes.get(1).children.add(1,graph.nodes.get(6));
-//
-//         graph.nodes.get(2).parents.add(0,graph.nodes.get(0));
-//         graph.nodes.get(2).children.add(0,graph.nodes.get(3));
-//
-//         graph.nodes.get(3).parents.add(0,graph.nodes.get(1));
-//         graph.nodes.get(3).parents.add(1,graph.nodes.get(2));
-//         graph.nodes.get(3).parents.add(2,graph.nodes.get(4));
-//         graph.nodes.get(3).children.add(0,graph.nodes.get(6));
-//
-//         graph.nodes.get(4).parents.add(0,graph.nodes.get(0));
-//         graph.nodes.get(4).children.add(0,graph.nodes.get(4));
-//         graph.nodes.get(4).children.add(1,graph.nodes.get(6));
-//
-//         graph.nodes.get(5).parents.add(0,graph.nodes.get(0));
-//
-//         graph.nodes.get(6).parents.add(0,graph.nodes.get(1));
-//         graph.nodes.get(6).parents.add(1,graph.nodes.get(3));
-//         graph.nodes.get(6).parents.add(2,graph.nodes.get(4));
-//     
-//         ArrayList<ArrayList<Node>> allParentsA = new ArrayList<ArrayList<Node>>();
-//         ArrayList<ArrayList<Node>> allParentsB = new ArrayList<ArrayList<Node>>();
-//         getAllParents(graph, allParentsA, graph.nodes.get(6), 0);
-//         getAllParents(graph, allParentsB, graph.nodes.get(3), 0);
-//         ArrayList<ArrayList<Node>> arrLCA = new ArrayList<ArrayList<Node>>();
-//         getLCA(arrLCA, allParentsA, allParentsB);
-//         System.out.println("End");
-   // }  
   
     static void getAllParents (LCA graph, ArrayList<ArrayList<Node>> allParents, Node node, int depth){
          
         if (!node.parents.isEmpty()){                                                
                     
             if (allParents.size() <= depth){    //if size <= depth, following entry is the fist entry at index depth  
-                //allParents.add(node.parents);     .add puts a pointer to the array, so editing allParents[i] also affects the first node added
                 allParents.add((ArrayList<Node>)node.parents.clone());
             }    
             else{
