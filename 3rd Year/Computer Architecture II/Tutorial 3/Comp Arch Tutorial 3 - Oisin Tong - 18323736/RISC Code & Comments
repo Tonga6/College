@@ -1,0 +1,107 @@
+Q1.
+
+        add r0, #4, r9                  ;inp_int = 4
+
+        max: 
+                add r26, r0, r1         ; use r1 for local v (function result returned in r1)
+                sub r27, r1, r0 {C}     ; b > v
+                jl max0 ;        
+                xor r0, r0, r0          ; nop in delay slot
+
+                add r27, r0, r1         ; v = b
+        max0:
+                sub r28, r1, r0 {C}     ; c > v
+                jl max1                 ;
+
+                xor r0, r0, r0          ; nop in delay slot
+                add r28, r0, r1         ; v = b
+        max1: 
+                ret r31, 0              ; return
+                xor r0, r0, r0          ; nop in delay slot
+
+        max5:   
+                add r9, r0, r10         ;1st parameter = inp_int
+                add r26, r0, r11        ;2nd parameter = i
+                add r27, r0, r12        ;3rd parameter = j
+                callr r15, max
+                xor r0, r0, r0          ;nop in delay slot
+
+                add r1, r0, r10         ; 1st parameter = max(inp_int, i, j)
+                add r28, r0, r11        ; 2nd parameter = k
+                add r29, r0, r12        ; 3rd parameter = l
+                callr r15, max
+                xor r0, r0, r0          ;nop in delay slot
+
+                ret r31, 0
+                xor r0, r0, r0          ;nop in delay slot
+
+
+Q2.
+
+
+fun: 
+        ;if (b==0)
+        sub r27, r0, r0 {c}     ; check is b == 0
+        jne fun0                ; jump not equal
+        xor r0, r0, r0          ; nop in delay slot
+
+        add r0, r0, r1         ; returning 0
+        ret r31, 0
+        xor r0, r0, r0          ; nop in delay slot
+fun0:
+        
+        
+        ;return fun(a + a, b/2)
+
+
+        ;return fun(a + a, b/2) + a
+        ;calc fun(a + a, b/2)
+fun1:        
+        add r27, r0, r10        ;1st parameter (b)
+        add r0, #2, r11         ;2nd parameter (2)
+        callr r15, div          ;call div
+        xor r0, r0, r0          ;nop in delay slot
+
+        add r26, r26, r10       ;1st parameter (2a) 
+        add r1, r0, r10         ;2nd parameter (b/2)
+        callr r15, fun          ;recursive call fun(a + a, b/2)
+        xor r0, r0, r0          ;nop in delay slot
+
+        add r16, r0, r1         ;store result in local reg
+        
+
+        ;if (b % 2 == 0)
+        add r26, r0, r10
+        add r0, #2, r11
+        callr r15, mod
+        xor r0, r0, r0          ; nop in delay slot
+        sub r1, r0, r0 {c}
+        jeq fun2                ;if equal, return fun(a + a, b/2)
+        xor r0, r0, r0          ; nop in delay slot
+
+        add r16, r26, r16       ;else return fun(a + a, b/2) + a        
+fun2:
+        add r16, r0, r1
+        ret r31, 0              ; return
+        xor r0, r0, r0          ; nop in delay slot
+
+
+
+
+Q3. Compare Result of Modifying Overflow Condition 
+
+When overflow occured on all windows being used, overflow occured notably less often than when overflow occured upon all but one windows
+being used.
+        Furthermore, the relative difference which each overflow condition resulted in shrank as the number of windows grew.
+With 6 windows, the overflows more than doubled from 40060015 to 80120034, 
+but with 8 windows 120180051 overflows became 16240070, and with
+16 windows the number of overflows changed from 200300081 to 240360100.
+The percantage change from over 50% with 6 windows is nowhere near as significant with 8 or 16 windows.
+
+
+Q4. Describe Your Approach and Accuracy
+
+To measure the time taken to calculate pascal(30,20) I installed a profiling tool for c++ on Visual Studio. 
+This allowed me to avoid the need for any additional code which would have resulted in an inaccurate time being returned.
+For instance, if I implemented a timer of my own, the time taken to stop it would have been registered as time still
+processing the pascal function.
