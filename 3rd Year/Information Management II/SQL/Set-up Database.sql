@@ -2,8 +2,6 @@ DROP DATABASE IF EXISTS `game_company`;
 CREATE DATABASE `game_company`; 
 USE `game_company`;
 
-CREATE ROLE IF NOT EXISTS 'contributer','read_only';
-GRANT SELECT ON game_company,* TO 'contributer','read_only';
 
 DROP TABLE IF EXISTS `Studios`;
 CREATE TABLE Studios (
@@ -40,9 +38,11 @@ CREATE TABLE Projects (
     project_id integer NOT NULL,
     genre varchar(255) NOT NULL,
     publisher_name varchar(255),
-    PRIMARY KEY(project_id),
+    PRIMARY KEY(project_name),
+
     FOREIGN KEY(publisher_name) REFERENCES Publishers(publisher_name)
 );
+ALTER TABLE Projects ADD UNIQUE (project_id);
 INSERT INTO Projects VALUES ('Corn Field', '0','Puzzle','EA');
 INSERT INTO Projects VALUES ('Duck','1','Platformer','Megaphone');
 INSERT INTO Projects VALUES ('Elysium','2','Shooter','La Rue');
@@ -88,6 +88,26 @@ CREATE TABLE Employees (
     CONSTRAINT check_employee_position CHECK (position IN ('Artist','Programmer',
        'Designer','Marketing','Studio Leader', 'CEO'))
 );
+
+
+DROP TABLE IF EXISTS `Contractors`;
+CREATE TABLE Contractors (
+	contractor_name varchar(255) NOT NULL,
+    contractor_email varchar(255) NOT NULL,
+    project_name varchar(255) NOT NULL,
+    service_provided varchar(255) NOT NULL,
+    PRIMARY KEY (contractor_name),
+    FOREIGN KEY (project_name) REFERENCES Projects (project_name),
+    CONSTRAINT check_contractor_service CHECK (service_provided IN ('Art','Sound',
+       'Localisation'))
+);
+INSERT INTO Contractors VALUES('Second Brush', 'greg@sb.com','Elysium', 'Art');
+INSERT INTO Contractors VALUES('Vox', 'voxrep@vox.com','Jump', 'Sound');
+INSERT INTO Contractors VALUES('Rosetta', 'laura@rosetta.com','Elysium', 'Localisation');
+INSERT INTO Contractors VALUES('Sonix', 'rep@sonix.com','Jump', 'Sound');
+INSERT INTO Contractors VALUES('Bob Ross', 'bob@ross.com','Warfield', 'Art');
+
+
 DELIMITER @@;
 -- Increment number of employees in the appropriate Team and Studio
 CREATE TRIGGER Add_Employee
@@ -169,14 +189,6 @@ INSERT INTO Employees VALUES ('Louis Goal', '26', 'Programmer', 'Junior', '2', '
 INSERT INTO Employees VALUES ('Kate Kae', '27', 'Programmer', 'Senior', '6', 'Singapore');
 INSERT INTO Employees VALUES ('Rye Bread', '28', 'Artist', 'Senior', '6', 'Singapore');
 
-
-CREATE TABLE Investors (
-    investor_name varchar(255),
-    investor_id integer,
-    contact_email varchar(255) NOT NULL
-);
-
-
 CREATE VIEW Dublin_Employees AS
 SELECT employee_name, employee_id, position, seniority
 FROM Employees
@@ -202,25 +214,8 @@ SELECT employee_name, employee_id, position, seniority
 FROM Employees
 WHERE studio_location = 'Singapore';
 
--- GRANT team_leader TO JSmith;
--- CREATE ROLE team_leader;
- 
-
--- CREATE TRIGGER New_Studio_Employee
---     BEFORE INSERT ON Employees
---     DECLARE
---         var_count integer;
---     BEGIN
---         var_count :=:  
---     END;
--- CREATE TRIGGER before_employee_insert
--- BEFORE INSERT
--- ON WorkCenters FOR EACH ROW
--- BEGIN
-
-
--- END;
--- CREATE ROLE studio_leader;
--- CREATE ROLE _Leader;
-
-
+CREATE ROLE IF NOT EXISTS 'moderator','read_only';
+GRANT SELECT ON game_company.* TO 'moderator','read_only';
+GRANT INSERT, DELETE, UPDATE ON Studios TO 'moderator';
+GRANT INSERT, DELETE, UPDATE ON Studios TO 'moderator';
+GRANT INSERT, DELETE, UPDATE ON Studios TO 'moderator';
